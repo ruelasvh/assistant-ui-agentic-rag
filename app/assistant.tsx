@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/sidebar";
 import { ThreadListSidebar } from "@/components/assistant-ui/threadlist-sidebar";
 import { Separator } from "@/components/ui/separator";
+import { DocumentsResultsUI } from "@/components/ui/results";
 
 export const Assistant = () => {
   const runtime = useChatRuntime({
@@ -33,6 +34,7 @@ export const Assistant = () => {
             </header>
             <div className="flex-1 overflow-hidden">
               <Thread />
+              <DocumentsResultsUI />
             </div>
           </SidebarInset>
         </div>
