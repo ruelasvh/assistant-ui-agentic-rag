@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write ."
+    "prettier:fix": "prettier --write .",
+    "chroma": "chroma run --path ./chromadb",
+    "ingest": "tsx scripts/load_data.ts"
   },
   "prettier": {
     "plugins": [
@@ -21,18 +23,22 @@
     "@assistant-ui/react": "^0.11.28",
     "@assistant-ui/react-ai-sdk": "^1.1.5",
     "@assistant-ui/react-markdown": "^0.11.1",
+    "@chroma-core/default-embed": "^0.1.8",
+    "@chroma-core/openai": "^0.1.7",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.8",
     "ai": "^5.0.65",
+    "chromadb": "^3.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.22",
     "lucide-react": "^0.545.0",
     "motion": "^12.23.22",
     "next": "15.5.4",
+    "pdf-parse": "^2.4.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-shiki": "^0.9.0",
@@ -52,6 +58,7 @@
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "tsx": "^4.20.6"
   }
 }
