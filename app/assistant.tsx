@@ -13,9 +13,20 @@ import {
 } from "@/components/ui/sidebar";
 import { ThreadListSidebar } from "@/components/assistant-ui/threadlist-sidebar";
 import { Separator } from "@/components/ui/separator";
-import { DocumentsResultsUI } from "@/components/ui/results";
+import { DocumentsResultsUI, RetrievalToolResultsUI } from "@/components/ui/results";
+
+import { makeAssistantTool } from "@assistant-ui/react";
+import { useState } from "react";
+
+// Define the master tool switch
+const MasterToolSwitch = makeAssistantTool({
+  toolName: "masterToolSwitch",
+});
+
 
 export const Assistant = () => {
+  const [shouldUseTools, setShouldUseTools] = useState(true);
+
   const runtime = useChatRuntime({
     transport: new AssistantChatTransport({
       api: "/api/chat",
@@ -33,8 +44,10 @@ export const Assistant = () => {
               <Separator orientation="vertical" className="mr-2 h-4" />
             </header>
             <div className="flex-1 overflow-hidden">
+              {shouldUseTools && <MasterToolSwitch />}
               <Thread />
-              <DocumentsResultsUI />
+              {/* <DocumentsResultsUI /> */}
+              <RetrievalToolResultsUI handleMasterToolSwitch={setShouldUseTools} />
             </div>
           </SidebarInset>
         </div>

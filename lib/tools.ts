@@ -8,6 +8,7 @@ import { generateText } from "ai";
 import { ChromaClient } from "chromadb";
 import { DefaultEmbeddingFunction } from "@chroma-core/default-embed";
 
+
 const client = new ChromaClient();
 
 /**
@@ -16,7 +17,7 @@ const client = new ChromaClient();
  * @param query - The original user query
  * @returns A summary with citations
  */
-async function summarize({ content, query }: { content: string, query: string }) {
+export async function summarize({ content, query }: { content: string, query: string }) {
   const systemPrompt = `You are an AI assistant with access to a vector database of documents about particle physics. Use the context provided only to answer user queries accurately and concisely.
 
   When you receive results from the database, synthesize the information and cite the sources (filename and line number).`;
@@ -57,7 +58,7 @@ export const retrieverTool = {
     const embeddings = await embeddingFunction.generate([query]);
     const queryResults = await collection.query({
       queryEmbeddings: embeddings,
-      nResults: 3, // Get more results for better context
+      nResults: 10, // Get more results for better context
     });
     
     // Format the results for the LLM to use
@@ -68,13 +69,16 @@ export const retrieverTool = {
       distance: queryResults.distances?.[0]?.[idx],
     })) || [];
 
-    const queryResultText = formattedQueryResults.map((doc) => `- Source: ${doc.source?.filename ?? "unknown"} (Line ${doc.source?.line_number ?? "unknown"}): ${doc.content}`).join("\n");
-
-    const resultSummary = await summarize({ content: queryResultText, query });
+    const queryResultText = formattedQueryResults.map((doc) => `- Source: ${doc.source?.filename ?? "unknown"} (Page ${doc.source?.page ?? "unknown"} - Line ${doc.source?.line_number ?? "unknown"}): ${doc.content}`).join("\n");
 
     return {
-      summary: resultSummary,
-    };
+      summary: [{text: queryResultText}]
+    }
+
+    // const resultSummary = await summarize({ content: queryResultText, query });
+    // return {
+    //   summary: resultSummary,
+    // };
   },
 };
 

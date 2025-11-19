@@ -133,9 +133,9 @@ const ThreadSuggestions: FC = () => {
           action: "Write a SQL query to find top customers",
         },
         {
-          title: "Create a meal plan",
-          label: "for healthy weight loss",
-          action: "Create a meal plan for healthy weight loss",
+          title: "Where is the ATLAS detector?",
+          label: "for experimental particle physics",
+          action: "Where is the ATLAS detector? for experimental particle physics",
         },
       ].map((suggestedAction, index) => (
         <m.div

@@ -50,10 +50,36 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 # Data Ingestion Guide
 
-To ingest your own data into the vector database, follow these steps:
+The system supports ingesting multiple document formats into the vector database:
 
-1. Place your text files in the `documents/` directory, then run the ingestion script:
+## Supported File Types
+
+- **PDF files** (`.pdf`): Extracts text from all pages with page numbers preserved
+- **LaTeX files** (`.tex`, `.latex`): Parses LaTeX content and strips formatting commands
+- **Images** (`.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.tiff`): Uses OCR (Tesseract.js) to extract text from images
+- **Text files** (`.txt`, `.md`): Plain text and markdown files
+
+## How to Ingest Documents
+
+1. Place your documents in the `documents/` directory (any combination of the supported file types)
+2. Run the ingestion script:
 
 ```bash
 npm run ingest
+```
+
+The script will:
+- Automatically detect file types based on extensions
+- Process each file with the appropriate parser
+- Extract text content and metadata (filename, page number, line number, file type)
+- Store everything in ChromaDB's vector database with embeddings for semantic search
+
+You can also specify custom options:
+
+```bash
+# Use a different directory
+npm run ingest -- --data_directory ./my-documents
+
+# Use a different collection name
+npm run ingest -- --collection_name my_custom_collection
 ```
